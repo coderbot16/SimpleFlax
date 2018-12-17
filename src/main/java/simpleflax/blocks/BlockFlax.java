@@ -183,25 +183,24 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		if(state.getValue(HALF) == Half.UPPER) {
+		if(state.getValue(HALF) == Half.LOWER) {
 			return;
 		}
-
-		super.getDrops(drops, world, pos, state, fortune);
 
 		int age = state.getValue(AGE);
 		Random random = world instanceof World ? ((World)world).rand : new Random();
 
-		if (age >= getMaxAge())
-		{
-			int tries = 3 + fortune;
+		if(age >= getMaxAge()) {
+			int string = 1 + random.nextInt(3) + random.nextInt(1 + fortune);
 
-			for (int i = 0; i < tries; ++i)
-			{
-				if (random.nextInt(2) == 0)
-				{
-					drops.add(new ItemStack(this.getCrop(), 1, 0));
-				}
+			for(int i = 0; i < string; i++) {
+				drops.add(new ItemStack(Items.STRING));
+			}
+		}
+
+		for(int attempt = 0; attempt < fortune + 3; attempt++) {
+			if(random.nextInt(8) <= age) {
+				drops.add(new ItemStack(FlaxObjects.FLAX_SEEDS));
 			}
 		}
 	}
@@ -215,11 +214,16 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 				world.destroyBlock(pos.down(), true);
 			}
 		} else if(world.getBlockState(pos.up()).getBlock() == this) {
-			world.setBlockToAir(pos.up());
+			if(player.capabilities.isCreativeMode) {
+				world.setBlockToAir(pos.up());
+			} else {
+				world.destroyBlock(pos.up(), true);
+			}
 		}
 	}
 
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
+		// Note: broken!
 		return this.isMaxAge(state) ? this.getCrop() : this.getSeed();
 	}
 
