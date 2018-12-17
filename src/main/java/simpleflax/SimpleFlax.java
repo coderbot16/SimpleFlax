@@ -1,11 +1,12 @@
 package simpleflax;
 
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
+import simpleflax.proxy.CommonProxy;
 
 @Mod(modid = SimpleFlax.MODID, name = SimpleFlax.NAME, version = SimpleFlax.VERSION)
 public class SimpleFlax
@@ -16,6 +17,9 @@ public class SimpleFlax
 
 	private static Logger logger;
 
+	@SidedProxy(clientSide = "simpleflax.proxy.ClientProxy", serverSide = "simpleflax.proxy.CommonProxy")
+	public static CommonProxy proxy;
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -25,7 +29,6 @@ public class SimpleFlax
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		// some example code
-		logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+		proxy.registerItemModels();
 	}
 }

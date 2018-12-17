@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "simpleflax:blocks/flax_4_upper"
+  }
+}

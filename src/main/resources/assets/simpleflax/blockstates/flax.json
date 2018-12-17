@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "age=0,half=lower": {"model": "simpleflax:flax_0" },
+    "age=1,half=lower": {"model": "simpleflax:flax_1" },
+    "age=2,half=lower": {"model": "simpleflax:flax_2" },
+    "age=3,half=lower": {"model": "simpleflax:flax_3" },
+    "age=4,half=lower": {"model": "simpleflax:flax_4_lower" },
+    "age=0,half=upper": {"model": "simpleflax:flax_0" },
+    "age=1,half=upper": {"model": "simpleflax:flax_1" },
+    "age=2,half=upper": {"model": "simpleflax:flax_2" },
+    "age=3,half=upper": {"model": "simpleflax:flax_3" },
+    "age=4,half=upper": {"model": "simpleflax:flax_4_upper" }
+  }
+}
