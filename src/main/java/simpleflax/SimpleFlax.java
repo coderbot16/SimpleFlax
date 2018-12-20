@@ -44,7 +44,9 @@ public class SimpleFlax
 		OreDictionary.registerOre("seedFlax", FlaxObjects.FLAX_SEEDS);
 		OreDictionary.registerOre("cropFlax", Items.STRING);
 
-		MinecraftForge.addGrassSeed(new ItemStack(FlaxObjects.FLAX_SEEDS), 7);
+		if(Config.seedWeight != 0) {
+			MinecraftForge.addGrassSeed(new ItemStack(FlaxObjects.FLAX_SEEDS), Config.seedWeight);
+		}
 
 		MapGenStructureIO.registerStructureComponent(ComponentFlaxField.class, "ViFF");
 
