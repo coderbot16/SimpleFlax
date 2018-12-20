@@ -1,11 +1,14 @@
 package simpleflax;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
+import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
 
 @Mod(modid = SimpleFlax.MODID, name = SimpleFlax.NAME, version = SimpleFlax.VERSION)
@@ -30,5 +33,6 @@ public class SimpleFlax
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.registerItemModels();
+		MinecraftForge.addGrassSeed(new ItemStack(FlaxObjects.FLAX_SEEDS), 7);
 	}
 }
