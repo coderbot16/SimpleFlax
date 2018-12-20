@@ -94,7 +94,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 		if(!ForgeHooks.onCropsGrowPre(world, pos, state, random.nextInt((int)(25.0F / growthChance) + 1) == 0)) return;
 
-		world.setBlockState(pos, this.withAge(age + 1));
+		world.setBlockState(pos, this.withAge(age + 1).withProperty(HALF, half));
 		if(half == Half.LOWER && age + 1 == getMaxAge()) {
 			world.setBlockState(pos.up(), this.withAge(0).withProperty(HALF, Half.UPPER));
 		}
@@ -210,6 +210,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if(state.getValue(HALF) == Half.UPPER && world.getBlockState(pos.down()).getBlock() == this) {
 			if(player.capabilities.isCreativeMode) {
+				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.down());
 			} else {
 				world.destroyBlock(pos.down(), true);
