@@ -96,7 +96,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 		world.setBlockState(pos, this.withAge(age + 1));
 		if(half == Half.LOWER && age + 1 == getMaxAge()) {
-			world.setBlockState(pos, this.withAge(0).withProperty(HALF, Half.UPPER));
+			world.setBlockState(pos.up(), this.withAge(0).withProperty(HALF, Half.UPPER));
 		}
 
 		ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
