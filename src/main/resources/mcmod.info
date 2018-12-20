@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "simpleflax",
+  "name": "Simple Flax",
+  "description": "Adds Flax, allowing the easy obtaining of large quantities of string.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["coderbot16"],
+  "credits": "Eloraam for creating RedPower2, the original mod containing a flax plant",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
