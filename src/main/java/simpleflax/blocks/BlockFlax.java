@@ -26,11 +26,12 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 4);
 	public static final PropertyEnum<Half> HALF = PropertyEnum.create("half", Half.class);
 
-	// TODO
+	// Growth pattern:
+	// +1, +2, +3, +4 (0.8 -> 1.0 is 0.2, plus 0.2 of upper half)
 	private static final double[] HEIGHTS = new double[] {
 		0.2,
-		0.4,
-		0.6,
+		0.3,
+		0.5,
 		0.8,
 		1.0
 	};
