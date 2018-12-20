@@ -23,8 +23,9 @@ import simpleflax.init.FlaxObjects;
 import java.util.Random;
 
 public class BlockFlax extends BlockCrops implements IGrowable {
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 4);
+	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 5);
 	public static final PropertyEnum<Half> HALF = PropertyEnum.create("half", Half.class);
+	public static final int MAX_AGE = 5;
 
 	// Growth pattern:
 	// +1, +2, +3, +4 (0.8 -> 1.0 is 0.2, plus 0.2 of upper half)
@@ -52,7 +53,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return BOUNDING_BOXES[state.getValue(AGE)];
+		return BOUNDING_BOXES[Math.min(state.getValue(AGE), 4)];
 	}
 
 	@Override
@@ -97,6 +98,8 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 		world.setBlockState(pos, this.withAge(age + 1).withProperty(HALF, half));
 		if(half == Half.LOWER && age + 1 == getMaxAge()) {
 			world.setBlockState(pos.up(), this.withAge(0).withProperty(HALF, Half.UPPER));
+		} else if(half == Half.UPPER && age + 1 >= getMaxAge() && world.getBlockState(pos.down()).getBlock() == this) {
+			world.setBlockState(pos.down(), this.withAge(MAX_AGE).withProperty(HALF, Half.LOWER));
 		}
 
 		ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
@@ -156,6 +159,10 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 			age = Math.min(age + this.getBonemealAgeIncrease(world), getMaxAge());
 
 			world.setBlockState(pos, this.withAge(age).withProperty(HALF, Half.UPPER));
+
+			if(age >= getMaxAge() && world.getBlockState(pos.down()).getBlock() == this) {
+				world.setBlockState(pos.down(), this.withAge(MAX_AGE).withProperty(HALF, Half.UPPER));
+			}
 		}
 	}
 
@@ -168,7 +175,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 		if(state.getValue(HALF) == Half.LOWER) {
 			return below.getBlock().canSustainPlant(below, world, pos.down(), EnumFacing.UP, this);
 		} else {
-			return below.getBlock() == this && below.getValue(HALF) == Half.LOWER && below.getValue(AGE) == getMaxAge();
+			return below.getBlock() == this && below.getValue(HALF) == Half.LOWER && below.getValue(AGE) >= getMaxAge();
 		}
 	}
 
@@ -184,14 +191,14 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		if(state.getValue(HALF) == Half.LOWER) {
+		if(state.getValue(HALF) == Half.UPPER) {
 			return;
 		}
 
 		int age = state.getValue(AGE);
 		Random random = world instanceof World ? ((World)world).rand : new Random();
 
-		if(age >= getMaxAge()) {
+		if(age >= MAX_AGE) {
 			int string = 1 + random.nextInt(3) + random.nextInt(1 + fortune);
 
 			for(int i = 0; i < string; i++) {
@@ -200,7 +207,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 		}
 
 		for(int attempt = 0; attempt < fortune + 3; attempt++) {
-			if(random.nextInt(8) <= age) {
+			if(random.nextInt(8) <= Math.min(age, 4)) {
 				drops.add(new ItemStack(FlaxObjects.FLAX_SEEDS));
 			}
 		}
@@ -210,16 +217,9 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if(state.getValue(HALF) == Half.UPPER && world.getBlockState(pos.down()).getBlock() == this) {
 			if(player.capabilities.isCreativeMode) {
-				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.down());
 			} else {
 				world.destroyBlock(pos.down(), true);
-			}
-		} else if(world.getBlockState(pos.up()).getBlock() == this) {
-			if(player.capabilities.isCreativeMode) {
-				world.setBlockToAir(pos.up());
-			} else {
-				world.destroyBlock(pos.up(), true);
 			}
 		}
 	}
@@ -233,7 +233,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 		// format: [HAAA] (H = half, A = age)
 
 		boolean half = meta >= 8;
-		int age = Math.min(meta & 7, getMaxAge());
+		int age = Math.min(meta & 7, MAX_AGE);
 
 		return this.withAge(age).withProperty(HALF, half ? Half.UPPER : Half.LOWER);
 	}
