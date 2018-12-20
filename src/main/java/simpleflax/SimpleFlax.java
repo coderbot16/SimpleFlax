@@ -1,5 +1,6 @@
 package simpleflax;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
@@ -9,6 +10,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
@@ -38,6 +40,9 @@ public class SimpleFlax
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.registerItemModels();
+
+		OreDictionary.registerOre("seedFlax", FlaxObjects.FLAX_SEEDS);
+		OreDictionary.registerOre("cropFlax", Items.STRING);
 
 		MinecraftForge.addGrassSeed(new ItemStack(FlaxObjects.FLAX_SEEDS), 7);
 

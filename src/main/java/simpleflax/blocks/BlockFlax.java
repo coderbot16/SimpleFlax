@@ -161,7 +161,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 			world.setBlockState(pos, this.withAge(age).withProperty(HALF, Half.UPPER));
 
 			if(age >= getMaxAge() && world.getBlockState(pos.down()).getBlock() == this) {
-				world.setBlockState(pos.down(), this.withAge(MAX_AGE).withProperty(HALF, Half.UPPER));
+				world.setBlockState(pos.down(), this.withAge(MAX_AGE).withProperty(HALF, Half.LOWER));
 			}
 		}
 	}
