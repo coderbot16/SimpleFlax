@@ -40,7 +40,11 @@ public class SimpleFlax
 		proxy.registerItemModels();
 
 		MinecraftForge.addGrassSeed(new ItemStack(FlaxObjects.FLAX_SEEDS), 7);
+
 		MapGenStructureIO.registerStructureComponent(ComponentFlaxField.class, "ViFF");
-		VillagerRegistry.instance().registerVillageCreationHandler(new FlaxVillageGen());
+
+		if(Config.villageGenerationWeight != 0) {
+			VillagerRegistry.instance().registerVillageCreationHandler(new FlaxVillageGen());
+		}
 	}
 }

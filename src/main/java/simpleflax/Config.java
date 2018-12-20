@@ -13,7 +13,7 @@ public class Config {
 		config.load();
 
 		seedWeight = config.getInt("seedWeight", Configuration.CATEGORY_GENERAL, 7, 1, 100, "Weight of Flax Seeds in the tall grass drop list (Wheat Seeds = 10)");
-		villageGenerationWeight = config.getInt("villageGenerationWeight", Configuration.CATEGORY_GENERAL, 60, 1, 100, "Weight of Flax Fields generating in villages. The small houses are 3, Blacksmiths are 15. higher is lower.");
+		villageGenerationWeight = config.getInt("villageGenerationWeight", Configuration.CATEGORY_GENERAL, 60, 1, 100, "Weight of Flax Fields generating in villages. The small houses are 3, Blacksmiths are 15. higher is lower (0 to disable).");
 
 		config.save();
 	}
