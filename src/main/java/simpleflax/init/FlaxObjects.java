@@ -13,7 +13,7 @@ import simpleflax.blocks.BlockFlax;
 @Mod.EventBusSubscriber
 public class FlaxObjects {
 	public static Item FLAX_SEEDS = null;
-	public static Block FLAX_BLOCK = null;
+	public static BlockFlax FLAX_BLOCK = null;
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
