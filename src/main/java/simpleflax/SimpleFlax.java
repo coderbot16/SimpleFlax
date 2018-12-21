@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import org.apache.logging.log4j.Logger;
 import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
 import simpleflax.village.ComponentFlaxField;
@@ -24,23 +23,18 @@ public class SimpleFlax
 	public static final String NAME = "Simple Flax";
 	public static final String VERSION = "0.2.0";
 
-	private static Logger logger;
-
 	@SidedProxy(clientSide = "simpleflax.proxy.ClientProxy", serverSide = "simpleflax.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		logger = event.getModLog();
 		Config.preInit(event);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		proxy.registerItemModels();
-
 		OreDictionary.registerOre("seedFlax", FlaxObjects.FLAX_SEEDS);
 		OreDictionary.registerOre("cropFlax", Items.STRING);
 

@@ -31,5 +31,7 @@ public class FlaxObjects {
 		FLAX_SEEDS.setUnlocalizedName(SimpleFlax.MODID + ".seeds");
 
 		event.getRegistry().register(FLAX_SEEDS);
+
+		SimpleFlax.proxy.registerItemModels();
 	}
 }
