@@ -17,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.ForgeHooks;
 import simpleflax.init.FlaxObjects;
 
@@ -136,6 +137,10 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 					if(world.isAirBlock(pos.up())) {
 						world.setBlockState(pos.up(), this.withAge(additionalAge).withProperty(HALF, Half.UPPER));
 					}
+
+					if(additionalAge >= this.getMaxAge()) {
+						world.setBlockState(pos, this.withAge(5).withProperty(HALF, Half.LOWER));
+					}
 				}
 
 				// Success
@@ -243,6 +248,11 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 		int age = state.getValue(AGE);
 
 		return (half ? 8 : 0) | (age & 7);
+	}
+
+	@Override
+	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+		return EnumPlantType.Crop;
 	}
 
 	@Override
