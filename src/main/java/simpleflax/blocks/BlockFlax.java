@@ -53,6 +53,18 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 	}
 
 	@Override
+	public boolean isMaxAge(IBlockState state) {
+		// The only thing that uses this is villagers when they want to grief our plants.
+		// So, we block that.
+		return false;
+	}
+
+	public boolean isMaxAgeForReal(IBlockState state)
+	{
+		return state.getValue(this.getAgeProperty()) >= this.getMaxAge();
+	}
+
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return BOUNDING_BOXES[Math.min(state.getValue(AGE), 4)];
 	}
@@ -109,13 +121,13 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 	@Override
 	public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
 		if(state.getValue(HALF) == Half.UPPER) {
-			return !this.isMaxAge(state);
-		} else if(!this.isMaxAge(state)) {
+			return !this.isMaxAgeForReal(state);
+		} else if(!this.isMaxAgeForReal(state)) {
 			return true;
 		} else {
 			IBlockState upper = world.getBlockState(pos.up());
 
-			return !this.isMaxAge(upper) && upper.getBlock() == this;
+			return !this.isMaxAgeForReal(upper) && upper.getBlock() == this;
 		}
 	}
 
@@ -231,7 +243,7 @@ public class BlockFlax extends BlockCrops implements IGrowable {
 
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		// Note: broken!
-		return this.isMaxAge(state) ? this.getCrop() : this.getSeed();
+		return this.isMaxAgeForReal(state) ? this.getCrop() : this.getSeed();
 	}
 
 	public IBlockState getStateFromMeta(int meta) {
