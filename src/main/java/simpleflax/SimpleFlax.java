@@ -4,13 +4,16 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import simpleflax.compat.SimpleHarvestCompat;
 import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
 import simpleflax.village.ComponentFlaxField;
@@ -46,6 +49,13 @@ public class SimpleFlax
 
 		if(Config.villageGenerationWeight != 0) {
 			VillagerRegistry.instance().registerVillageCreationHandler(new FlaxVillageGen());
+		}
+	}
+
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		if(Config.simpleHarvestCompat && Loader.isModLoaded("harvest")) {
+			SimpleHarvestCompat.init();
 		}
 	}
 }
