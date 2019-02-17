@@ -9,11 +9,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import simpleflax.SimpleFlax;
 import simpleflax.blocks.BlockFlax;
+import simpleflax.blocks.BlockFlaxWild;
 
 @Mod.EventBusSubscriber
 public class FlaxObjects {
 	public static Item FLAX_SEEDS = null;
 	public static BlockFlax FLAX_BLOCK = null;
+	public static BlockFlaxWild FLAX_BLOCK_WILD = null;
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -22,6 +24,12 @@ public class FlaxObjects {
 		FLAX_BLOCK.setUnlocalizedName(SimpleFlax.MODID + ".flax");
 
 		event.getRegistry().register(FLAX_BLOCK);
+
+		FLAX_BLOCK_WILD = new BlockFlaxWild();
+		FLAX_BLOCK_WILD.setRegistryName(SimpleFlax.MODID, "wild_flax");
+		FLAX_BLOCK_WILD.setUnlocalizedName(SimpleFlax.MODID + ".wild_flax");
+
+		event.getRegistry().register(FLAX_BLOCK_WILD);
 	}
 
 	@SubscribeEvent

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=lower": {"model": "simpleflax:flax_4_lower" },
+    "half=upper": {"model": "simpleflax:flax_4_upper" }
+  }
+}
