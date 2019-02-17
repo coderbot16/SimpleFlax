@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import simpleflax.compat.SimpleHarvestCompat;
@@ -18,6 +19,7 @@ import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
 import simpleflax.village.ComponentFlaxField;
 import simpleflax.village.FlaxVillageGen;
+import simpleflax.world.WildFlaxGenerator;
 
 @Mod(modid = SimpleFlax.MODID, name = SimpleFlax.NAME, version = SimpleFlax.VERSION)
 public class SimpleFlax
@@ -50,6 +52,8 @@ public class SimpleFlax
 		if(Config.villageGenerationWeight != 0) {
 			VillagerRegistry.instance().registerVillageCreationHandler(new FlaxVillageGen());
 		}
+
+		GameRegistry.registerWorldGenerator(new WildFlaxGenerator(Config.flaxPerChunk), 2);
 	}
 
 	@EventHandler
