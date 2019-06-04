@@ -24,7 +24,8 @@ import simpleflax.init.FlaxObjects;
 import java.util.Random;
 
 public class BlockFlax extends BlockCrops implements IGrowable {
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 5);
+	// Prevent TOP from detecting the age property
+	public static final PropertyInteger AGE = PropertyInteger.create("ayyge", 0, 5);
 	public static final PropertyEnum<Half> HALF = PropertyEnum.create("half", Half.class);
 	public static final int MAX_AGE = 5;
 

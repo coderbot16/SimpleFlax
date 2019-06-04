@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import simpleflax.compat.SimpleHarvestCompat;
+import simpleflax.compat.TheOneProbeCompat;
 import simpleflax.init.FlaxObjects;
 import simpleflax.proxy.CommonProxy;
 import simpleflax.village.ComponentFlaxField;
@@ -60,6 +61,10 @@ public class SimpleFlax
 	public void postInit(FMLPostInitializationEvent event) {
 		if(Config.simpleHarvestCompat && Loader.isModLoaded("harvest")) {
 			SimpleHarvestCompat.init();
+		}
+
+		if(Loader.isModLoaded("theoneprobe")) {
+			TheOneProbeCompat.init();
 		}
 	}
 }
